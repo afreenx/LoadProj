@@ -33,15 +33,49 @@ void newStartRequest(LoadBalancer* loadBalancer, int numServers) {
 }
 
 void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webservers, std::ofstream& ofs, int runTime) {
-   
+    while (loadBalancer->getTime() < runTime) {
+        for (std::vector<WebServer*>::size_type i = 0; i < webservers.size(); i++) {
+            int currentTime = loadBalancer->getTime();
+            WebServer* webserver = webservers[i];
+
+            if (webserver->getRequest() != nullptr && webserver->reqDone(currentTime)) {
+                Request* processedRequest = webserver->getRequest();
+
+                ofs << "Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
+                    processedRequest->outputIP + " at time " << currentTime << std::endl;
+                std::cout << "Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
+                    processedRequest->outputIP + " at time " << currentTime << std::endl;
+
+                delete processedRequest;
+                webserver->processRequest(loadBalancer->popRequest(), currentTime);
+            }
+        }
+
+        Request* newReq = new Request();
+        newReq->processingTime = rand() % 1000;
+        loadBalancer->pushRequest(newReq);
+
+        if (loadBalancer->sizeQueue() > 15) {
+            Request* newReq = new Request();
+            newReq->processingTime = rand() % 1000;
+            loadBalancer->pushRequest(newReq);
+        }
+
+        loadBalancer->updateTime();
+    }
+
+    ofs << std::endl << std:: endl << "Ending Queue Size: " << loadBalancer->sizeQueue() << std::endl;
 }
+
 
 int main() {
     srand(time(0));
 
     int numServers = 0;
     int runTime = 0;
-    std::cout << "Enter number of Computing nodes: ";
+    int startsizeQ = 0;
+
+    std::cout << "Enter number of Computing node: ";
     std::cin >> numServers;
 
     std::cout << "Enter time to run the load balancer: ";
@@ -52,5 +86,31 @@ int main() {
     std::cin >> ipRange;
 
     std::ofstream ofs;
-   
+    myNewLogFile(ofs, numServers, runTime, ipRange);
+
+    std::vector<WebServer*> webservers(numServers, nullptr); // vector that holds webservers
+    newWebserver(webservers, numServers, ipRange);
+
+    LoadBalancer* loadBalancer = new LoadBalancer();
+
+    newStartRequest(loadBalancer, numServers);
+    startsizeQ = loadBalancer->sizeQueue();
+
+    for (int i = 0; i < numServers; i++) {
+        WebServer* webserver = webservers[i];
+        webserver->processRequest(loadBalancer->popRequest(), loadBalancer->getTime());
+    }
+
+    processRequests(loadBalancer, webservers, ofs, runTime);
+    ofs << "Starting Queue size: " << startsizeQ << std::endl << std::endl;
+
+    delete loadBalancer;
+
+    for (WebServer* webserver : webservers) {
+        delete webserver;
+    }
+
+    ofs.close();
+
+    return 0;
 }
