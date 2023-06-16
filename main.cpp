@@ -1,5 +1,5 @@
-#include "loadbalancer.h"
-#include "webserver.h"
+#include "LoadBalancer.h"
+#include "Webserver.h"
 
 #include <fstream>
 #include <iostream>
@@ -16,7 +16,11 @@ void myNewLogFile(std::ofstream& ofs, int numServers, int runTime, const std::st
 }
 
 void newWebserver(std::vector<WebServer*>& webservers, int numServers, const std::string& ipRange) {
-  
+    for (int i = 0; i < numServers; i++) {
+        WebServer* webserver = new WebServer(i + 1);
+        webserver->blockIPRange(ipRange);
+        webservers[i] = webserver;
+    }
 }
 
 void newStartRequest(LoadBalancer* loadBalancer, int numServers) {
