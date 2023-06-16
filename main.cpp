@@ -12,7 +12,7 @@ void myNewLogFile(std::ofstream& ofs, int numServers, int runTime, const std::st
 
     ofs << "Log of " << numServers << " Computing nodes running for " << runTime << " clock cycles" << std::endl;
     ofs << "Computing web server nodes for blocked IP range: " << ipRange << std::endl;
-    std::cout << "Computing web server nodes for blocked IP range: " << ipRange << std::endl;
+    std::cout << "Blocked IP range: " << ipRange << std::endl;
 }
 
 void newWebserver(std::vector<WebServer*>& webservers, int numServers, const std::string& ipRange) {
@@ -24,7 +24,12 @@ void newWebserver(std::vector<WebServer*>& webservers, int numServers, const std
 }
 
 void newStartRequest(LoadBalancer* loadBalancer, int numServers) {
-   
+    srand(time(0));
+    for (int i = 0; i < (numServers * 2); i++) {
+        Request* newReq = new Request();
+        newReq->processingTime = rand() % 1000;
+        loadBalancer->pushRequest(newReq);
+    }
 }
 
 void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webservers, std::ofstream& ofs, int runTime) {
@@ -36,8 +41,6 @@ int main() {
 
     int numServers = 0;
     int runTime = 0;
-    int requestsToGenerate = 0;
-
     std::cout << "Enter number of Computing nodes: ";
     std::cin >> numServers;
 
