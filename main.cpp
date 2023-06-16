@@ -6,7 +6,7 @@
 #include <time.h>
 #include <vector>
 
-void logFile(std::ofstream& ofs, int numServers, int runTime, const std::string& ipRange) {
+void myNewlogFile(std::ofstream& ofs, int numServers, int runTime, const std::string& ipRange) {
    
 }
 
