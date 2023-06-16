@@ -6,8 +6,13 @@
 #include <time.h>
 #include <vector>
 
-void myNewlogFile(std::ofstream& ofs, int numServers, int runTime, const std::string& ipRange) {
-   
+void myNewLogFile(std::ofstream& ofs, int numServers, int runTime, const std::string& ipRange) {
+    std::string fileName = "LoadBalancerLog.txt";
+    ofs.open(fileName, std::ios::out | std::ios::trunc);
+
+    ofs << "Log of " << numServers << " Computing nodes running for " << runTime << " clock cycles" << std::endl;
+    ofs << "Computing web server nodes for blocked IP range: " << ipRange << std::endl;
+    std::cout << "Computing web server nodes for blocked IP range: " << ipRange << std::endl;
 }
 
 void newWebserver(std::vector<WebServer*>& webservers, int numServers, const std::string& ipRange) {
