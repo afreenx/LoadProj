@@ -33,6 +33,9 @@ void newStartRequest(LoadBalancer* loadBalancer, int numServers) {
 }
 
 void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webservers, std::ofstream& ofs, int runTime) {
+    int rangeMin = webservers[0]->getRequest()->processingTime;
+    int rangeMax = webservers[0]->getRequest()->processingTime;
+
     while (loadBalancer->getTime() < runTime) {
         for (std::vector<WebServer*>::size_type i = 0; i < webservers.size(); i++) {
             int currentTime = loadBalancer->getTime();
@@ -41,9 +44,16 @@ void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webser
             if (webserver->getRequest() != nullptr && webserver->reqDone(currentTime)) {
                 Request* processedRequest = webserver->getRequest();
 
+                if (processedRequest->processingTime < rangeMin) {
+                    rangeMin = processedRequest->processingTime;
+                }
+                else if (processedRequest->processingTime > rangeMax) {
+                    rangeMax = processedRequest->processingTime;
+                }
+
                 ofs << "Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
                     processedRequest->outputIP + " at time " << currentTime << std::endl;
-                std::cout << "Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
+                std::cout << " Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
                     processedRequest->outputIP + " at time " << currentTime << std::endl;
 
                 delete processedRequest;
@@ -64,6 +74,8 @@ void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webser
         loadBalancer->updateTime();
     }
 
+    ofs << std::endl << "Min Task Time = " << rangeMin << ", Max Task Time =  " << rangeMax << std::endl;
+    ofs << "Range is therefore " << rangeMin << " to " << rangeMax << std::endl;
     ofs << std::endl << std:: endl << "Ending Queue Size: " << loadBalancer->sizeQueue() << std::endl;
 }
 
