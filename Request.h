@@ -14,10 +14,10 @@
  */
 struct Request {
     std::string inputIP = std::to_string(rand() % 256) + "." + std::to_string(rand() % 256) + "." +
-        std::to_string(rand() % 256) + "." + std::to_string(rand() % 256);
+        std::to_string(rand() % 256) + "." + std::to_string(rand() % 256); /**< The input IP address of the request. */
 
     std::string outputIP = std::to_string(rand() % 256) + "." + std::to_string(rand() % 256) + "." +
-        std::to_string(rand() % 256) + "." + std::to_string(rand() % 256);
+        std::to_string(rand() % 256) + "." + std::to_string(rand() % 256);  /**< The output IP address of the request. */
 
     int processingTime; /**< The processing time for the request. */
 };
