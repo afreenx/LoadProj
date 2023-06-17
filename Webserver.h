@@ -10,7 +10,7 @@ private:
     int serverName;
     int reqStart;
     Request* request;
-    std::vector<std::string> blockedIPranges;
+    std::vector<std::string> blockedIPRanges;
 
 public:
     WebServer(int server_name);

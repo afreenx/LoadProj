@@ -1,0 +1,43 @@
+Log of 10 Computing nodes running for 2000 clock cycles
+Computing web server nodes for blocked IP range: 10.0.0.0
+Computing web server node 9 completed running request from 117.119.47.159 to 147.181.250.104 at time 150
+Computing web server node 3 completed running request from 193.31.151.201 to 29.74.21.129 at time 344
+Computing web server node 2 completed running request from 184.54.149.70 to 106.234.253.170 at time 378
+Computing web server node 2 completed running request from 57.173.13.243 to 127.140.139.154 at time 394
+Computing web server node 9 completed running request from 66.216.157.63 to 209.166.162.245 at time 558
+Computing web server node 6 completed running request from 43.64.131.57 to 13.74.215.76 at time 569
+Computing web server node 7 completed running request from 32.118.87.95 to 142.64.227.159 at time 571
+Computing web server node 5 completed running request from 5.150.154.36 to 152.59.44.224 at time 606
+Computing web server node 3 completed running request from 130.131.68.164 to 88.249.178.227 at time 682
+Computing web server node 10 completed running request from 229.83.221.140 to 93.92.170.61 at time 762
+Computing web server node 4 completed running request from 239.32.109.72 to 96.59.23.31 at time 789
+Computing web server node 5 completed running request from 123.132.238.196 to 117.4.136.234 at time 877
+Computing web server node 8 completed running request from 220.99.201.87 to 243.115.254.238 at time 886
+Computing web server node 3 completed running request from 131.89.132.210 to 34.140.125.70 at time 902
+Computing web server node 1 completed running request from 65.76.246.178 to 17.58.233.110 at time 961
+Computing web server node 1 completed running request from 224.138.198.157 to 126.153.108.138 at time 1065
+Computing web server node 8 completed running request from 94.165.195.202 to 187.67.80.103 at time 1094
+Computing web server node 2 completed running request from 129.37.219.55 to 93.89.194.27 at time 1137
+Computing web server node 5 completed running request from 244.184.226.196 to 55.77.61.180 at time 1232
+Computing web server node 3 completed running request from 218.173.64.4 to 137.68.75.209 at time 1283
+Computing web server node 9 completed running request from 139.137.3.251 to 42.15.205.167 at time 1303
+Computing web server node 7 completed running request from 220.48.221.20 to 149.1.12.20 at time 1314
+Computing web server node 1 completed running request from 89.87.204.214 to 245.254.27.150 at time 1323
+Computing web server node 6 completed running request from 220.9.35.193 to 80.137.23.23 at time 1450
+Computing web server node 10 completed running request from 84.228.171.163 to 156.133.193.192 at time 1535
+Computing web server node 4 completed running request from 184.106.158.145 to 221.60.89.98 at time 1624
+Computing web server node 7 completed running request from 188.183.66.147 to 88.100.41.61 at time 1675
+Computing web server node 8 completed running request from 95.61.56.78 to 22.12.126.60 at time 1789
+Computing web server node 3 completed running request from 16.255.159.142 to 76.77.55.237 at time 1823
+Computing web server node 4 completed running request from 45.126.69.188 to 1.63.73.30 at time 1891
+Computing web server node 1 completed running request from 227.18.203.216 to 105.226.177.89 at time 1977
+Computing web server node 7 completed running request from 142.12.227.240 to 139.121.195.253 at time 1977
+Computing web server node 8 completed running request from 176.227.164.189 to 126.86.117.162 at time 1998
+
+Min Task Time = 16, Max Task Time =  961
+Range is therefore 16 to 961
+
+
+Ending Queue Size: 3972
+Starting Queue size: 20
+
