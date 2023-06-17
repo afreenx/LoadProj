@@ -5,7 +5,17 @@
 #include <iostream>
 #include <time.h>
 #include <vector>
-
+/**
+ * @brief Creates a new log file and writes information about the load balancer setup.
+ *
+ * This function creates a new log file named "LoadBalancerLog.txt" and writes information about the load balancer setup
+ * to the file. The information includes the number of computing nodes, the runtime, and the blocked IP range.
+ *
+ * @param ofs The output file stream object to write the log information.
+ * @param numServers The number of computing nodes in the load balancer.
+ * @param runTime The runtime of the load balancer in clock cycles.
+ * @param ipRange The blocked IP range for the load balancer.
+ */
 void myNewLogFile(std::ofstream& ofs, int numServers, int runTime, const std::string& ipRange) {
     std::string fileName = "LoadBalancerLog.txt";
     ofs.open(fileName, std::ios::out | std::ios::trunc);
@@ -15,6 +25,16 @@ void myNewLogFile(std::ofstream& ofs, int numServers, int runTime, const std::st
     std::cout << "Blocked IP range: " << ipRange << std::endl;
 }
 
+/**
+ * @brief Creates new web server objects and adds them to a vector.
+ *
+ * This function creates a specified number of web server objects and adds them to the provided vector. Each web server
+ * object is assigned a unique identifier starting from 1. The IP range specified is blocked for each web server.
+ *
+ * @param webservers A vector to store the created web server objects.
+ * @param numServers The number of web server objects to create.
+ * @param ipRange The IP range to block for each web server.
+ */
 void newWebserver(std::vector<WebServer*>& webservers, int numServers, const std::string& ipRange) {
     for (int i = 0; i < numServers; i++) {
         WebServer* webserver = new WebServer(i + 1);
@@ -23,6 +43,15 @@ void newWebserver(std::vector<WebServer*>& webservers, int numServers, const std
     }
 }
 
+/**
+ * @brief Generates and pushes new requests to the load balancer.
+ *
+ * This function generates a specified number of new request objects and pushes them to the load balancer. Each request
+ * object has a randomly assigned processing time between 0 and 999 (inclusive).
+ *
+ * @param loadBalancer A pointer to the load balancer object.
+ * @param numServers The number of servers managed by the load balancer.
+ */
 void newStartRequest(LoadBalancer* loadBalancer, int numServers) {
     srand(time(0));
     for (int i = 0; i < (numServers * 2); i++) {
@@ -32,6 +61,20 @@ void newStartRequest(LoadBalancer* loadBalancer, int numServers) {
     }
 }
 
+/**
+ * @brief Processes requests in the load balancer.
+ *
+ * This function processes requests in the load balancer until the specified runtime is reached. It iterates through each
+ * web server in the provided vector and checks if a request is completed. If a request is completed, it updates the range
+ * of processing times and writes the completion information to the output file stream and standard output. After processing
+ * each web server, it generates a new request and pushes it to the load balancer. If the queue size exceeds 15, an additional
+ * request is added to the queue. The function also updates the time in the load balancer after each iteration.
+ *
+ * @param loadBalancer A pointer to the load balancer object.
+ * @param webservers A vector containing web server objects.
+ * @param ofs The output file stream object to write the completion information.
+ * @param runTime The runtime of the load balancer.
+ */
 void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webservers, std::ofstream& ofs, int runTime) {
     int rangeMin = webservers[0]->getRequest()->processingTime;
     int rangeMax = webservers[0]->getRequest()->processingTime;
@@ -76,10 +119,23 @@ void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webser
 
     ofs << std::endl << "Min Task Time = " << rangeMin << ", Max Task Time =  " << rangeMax << std::endl;
     ofs << "Range is therefore " << rangeMin << " to " << rangeMax << std::endl;
-    ofs << std::endl << std:: endl << "Ending Queue Size: " << loadBalancer->sizeQueue() << std::endl;
+    ofs << std::endl << std::endl << "Ending Queue Size: " << loadBalancer->sizeQueue() << std::endl;
 }
 
 
+
+/**
+ * @brief The entry point of the program.
+ *
+ * This function is the entry point of the program. It initializes the random number generator, prompts the user to enter
+ * the number of computing nodes, the runtime of the load balancer, and the IP range to block for all servers. It creates
+ * a new log file using the provided information and initializes a vector to hold the web server objects. It creates the
+ * web server objects and assigns the blocked IP range to each server. It also creates a new load balancer object and
+ * generates initial requests. It processes the requests and writes the completion information to the log file. Finally,
+ * it performs cleanup by deleting the load balancer object, web server objects, and closing the log file.
+ *
+ * @return An integer indicating the exit status of the program.
+ */
 int main() {
     srand(time(0));
 
