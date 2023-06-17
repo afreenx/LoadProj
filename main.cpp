@@ -20,7 +20,7 @@ void myNewLogFile(std::ofstream& ofs, int numServers, int runTime, const std::st
     std::string fileName = "LoadBalancerLog.txt";
     ofs.open(fileName, std::ios::out | std::ios::trunc);
 
-    ofs << "Log of " << numServers << " Computing nodes running for " << runTime << " clock cycles" << std::endl;
+    ofs << "Log of " << numServers << " Servers running for " << runTime << " clock cycles" << std::endl;
     ofs << "Computing web server nodes for blocked IP range: " << ipRange << std::endl;
     std::cout << "Blocked IP range: " << ipRange << std::endl;
 }
@@ -94,9 +94,9 @@ void processRequests(LoadBalancer* loadBalancer, std::vector<WebServer*>& webser
                     rangeMax = processedRequest->processingTime;
                 }
 
-                ofs << "Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
+                ofs << "Computing Web Server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
                     processedRequest->outputIP + " at time " << currentTime << std::endl;
-                std::cout << " Computing web server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
+                std::cout << "Computing Web Server node " << webserver->getServerName() << " completed running request from " + processedRequest->inputIP + " to " +
                     processedRequest->outputIP + " at time " << currentTime << std::endl;
 
                 delete processedRequest;
@@ -143,15 +143,16 @@ int main() {
     int runTime = 0;
     int startsizeQ = 0;
 
-    std::cout << "Enter number of Computing node: ";
+    std::cout << "Enter number of Servers: ";
     std::cin >> numServers;
 
-    std::cout << "Enter time to run the load balancer: ";
+    std::cout << "Enter time to run the load balancer (Clock Cycles): ";
     std::cin >> runTime;
 
     std::string ipRange;
-    std::cout << "Enter IP range to block for all servers: ";
+    std::cout << "Enter IP range to block for all servers (Example: 192.168.0.0/24 blocks addresses from 192.168.0.1 to 192.168.0.254) : ";
     std::cin >> ipRange;
+    
 
     std::ofstream ofs;
     myNewLogFile(ofs, numServers, runTime, ipRange);
